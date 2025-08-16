@@ -113,6 +113,20 @@ jobs:
 - How to automatically build and run code in the cloud.
 ---
 
+## 🔮 Future Projects
+
+These projects will be added step by step in this repository:
+
+✅ Deploy Java App with Maven + SonarQube → For static code analysis & quality gates.
+
+✅ Deploy Java App to Kubernetes → Using manifests, ConfigMaps, and services.
+
+✅ Deploy Java App with Docker Swarm → For container orchestration and scaling.
+
+Each project will have its own folder and detailed README.md with step-by-step instructions.
+
+---
+
 🙌 Contributing
 
 - If you are a beginner and want to practice GitHub Actions or Java, feel free to fork this repo and try making changes!
