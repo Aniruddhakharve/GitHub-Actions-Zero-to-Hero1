@@ -27,5 +27,5 @@ jobs:
       run: mvn test
 
     - name: Run Java App
-      run: java -cp target/my-java-app-1.0-SNAPSHOT.jar com.example.HelloWorld
+      run: java -cp target/my-java-app-1.0-SNAPSHOT.jar com.example.App
 
