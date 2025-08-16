@@ -1,4 +1,3 @@
-cat > src/main/java/com/example/App.java << 'EOF'
 package com.example;
 
 public class App {
@@ -12,5 +11,4 @@ public class App {
         return a + b;
     }
 }
-EOF
 
