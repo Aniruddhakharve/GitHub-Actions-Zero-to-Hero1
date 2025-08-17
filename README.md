@@ -125,6 +125,63 @@ jobs:
       - name: Run App
         run: java -jar target/github-actions-zero-to-hero1-1.0.0.jar
 ```
+
+---
+## 🛠️ Setting up a Self-Hosted Runner on EC2
+
+### 1️⃣ Launch an EC2 Instance
+- OS: Ubuntu (latest LTS recommended)
+- Instance type: t2.micro (enough for testing)
+- Security Group rules:
+    - ✅ Inbound: allow SSH (port 22) from your IP
+    - ✅ Outbound: allow all traffic (0.0.0.0/0) (needed for GitHub runner to reach GitHub servers)
+
+### 2️⃣ Install Required Packages
+- SSH into your EC2 instance:
+```
+SSH into your EC2 instance:
+```
+- Update packages:
+```
+sudo apt-get update && sudo apt-get upgrade -y
+```
+- Install basic dependencies:
+```
+sudo apt-get install -y curl wget tar git
+```
+
+### 3️⃣ Configure Self-Hosted Runner
+- 1.Go to your GitHub repo → Settings → Actions → Runners → New self-hosted runner.
+- 2.Select Linux and copy the commands GitHub provides. Example:
+```
+# Create a folder
+mkdir actions-runner && cd actions-runner
+
+# Download the runner package (replace URL with the one from GitHub)
+curl -o actions-runner-linux-x64-2.314.1.tar.gz -L https://github.com/actions/runner/releases/download/v2.314.1/actions-runner-linux-x64-2.314.1.tar.gz
+
+# Extract
+tar xzf ./actions-runner-linux-x64-2.314.1.tar.gz
+
+# Configure (replace TOKEN and URL from GitHub setup page)
+./config.sh --url https://github.com/your-username/your-repo --token YOUR_TOKEN
+```
+- 3.Start the runner:
+```
+./run.sh
+```
+
+### 4️⃣ Update Workflow to Use Self-Hosted Runner
+- In your .github/workflows/maven.yml, change:
+```
+runs-on: ubuntu-latest
+```
+to:
+
+```
+runs-on: self-hosted
+```
+
 ---
 
 ## ✅ Learning Outcomes
