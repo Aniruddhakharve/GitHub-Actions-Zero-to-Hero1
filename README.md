@@ -10,15 +10,18 @@ It shows how to create a simple Java application, build it with Maven, and run i
 - Build Tool: **Maven**
 - CI/CD: **GitHub Actions**
 - Example program: Adds two numbers and prints the result.
+- Runs on: **GitHub-hosted runners** 🖥️ and **Self-hosted runners** (e.g., EC2 instance) ☁️
 
 This project is useful if you are new to:
 - GitHub Actions
 - Java + Maven projects
 - CI/CD pipelines
+- Self-hosted GitHub runners
 
 ---
 
 ## 📂 Project Structure
+
 ```
 ├── pom.xml # Maven build configuration
 └── src
@@ -77,7 +80,7 @@ Hello, GitHub Actions with Maven!
 .github/workflows/maven.yml
 ```
 
-Example snippet:
+Example (GitHub-hosted runner):
 ```
 name: Java CI with Maven
 
@@ -91,9 +94,29 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Set up JDK 17
-        uses: actions/setup-java@v3
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - name: Build with Maven
+        run: mvn -B package --file pom.xml
+      - name: Run App
+        run: java -jar target/github-actions-zero-to-hero1-1.0.0.jar
+
+```
+Example (Self-hosted runner, e.g., EC2):
+```
+jobs:
+  build:
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Maven (only if not pre-installed)
+        run: sudo apt-get update && sudo apt-get install -y maven
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
         with:
           java-version: '17'
           distribution: 'temurin'
@@ -111,6 +134,8 @@ jobs:
 - How to set up a CI/CD pipeline using GitHub Actions.
 
 - How to automatically build and run code in the cloud.
+  
+- How to configure and use self-hosted runners like an EC2 instance for CI/CD.
 ---
 
 ## 🔮 Future Projects
@@ -122,6 +147,8 @@ These projects will be added step by step in this repository:
 ✅ Deploy Java App to Kubernetes → Using manifests, ConfigMaps, and services.
 
 ✅ Deploy Java App with Docker Swarm → For container orchestration and scaling.
+
+
 
 Each project will have its own folder and detailed README.md with step-by-step instructions.
 
