@@ -108,22 +108,40 @@ jobs:
 ```
 Example (Self-hosted runner, e.g., EC2):
 ```
+name: Java CI with Maven
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
 jobs:
   build:
     runs-on: self-hosted
+
     steps:
-      - uses: actions/checkout@v4
-      - name: Install Maven (only if not pre-installed)
-        run: sudo apt-get update && sudo apt-get install -y maven
-      - name: Set up JDK 17
-        uses: actions/setup-java@v4
-        with:
-          java-version: '17'
-          distribution: 'temurin'
-      - name: Build with Maven
-        run: mvn -B package --file pom.xml
-      - name: Run App
-        run: java -jar target/github-actions-zero-to-hero1-1.0.0.jar
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up JDK 17
+      uses: actions/setup-java@v4
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+
+    - name: Install Maven
+      run: sudo apt-get update && sudo apt-get install -y maven
+
+    - name: Build with Maven
+      run: mvn -B package --file pom.xml
+
+    - name: Run Tests
+      run: mvn test
+
+    - name: Run Java App
+      run: java -jar target/github-actions-zero-to-hero1-1.0.0.jar
+
 ```
 
 ---
